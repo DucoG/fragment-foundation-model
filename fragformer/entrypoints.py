@@ -35,7 +35,7 @@ def fragformer_entrypoint(config: DictConfig, fold: Optional[int] = None) -> Opt
         else:
             datamodule: LightningDataModule = hydra.utils.instantiate(config.datamodule)
         datamodule.setup()
-        # max_seq_len = datamodule.train_dataset.max_seq_len
+        max_seq_len = datamodule.train_dataset.context_window * 4 + 3
     else:
         raise NotImplementedError(f"No datamodule target found in <{config.datamodule}>")
 
@@ -60,7 +60,7 @@ def fragformer_entrypoint(config: DictConfig, fold: Optional[int] = None) -> Opt
     # Init transformer
     if config.model.get("_target_"):
         logger.info(f"Instantiating model <{config.model._target_}>")
-        model: LightningModule = hydra.utils.instantiate(config.model)
+        model: LightningModule = hydra.utils.instantiate(config.model, max_seq_len=max_seq_len)
     else:
         raise NotImplementedError(f"No model target found in <{config.model}>")
 

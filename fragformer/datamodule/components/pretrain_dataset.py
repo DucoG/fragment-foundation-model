@@ -12,6 +12,7 @@ class PolarsParquetBatchIterator:
     def __init__(self, 
                  parquet_files: Union[List[str], List[Path]],
                  columns: List[str], 
+                 context_window: int,
                  batch_size: int,
                  tokenizer: Tokenizer,
                  transform: Optional[Any] = None,
@@ -19,10 +20,11 @@ class PolarsParquetBatchIterator:
         ):
         self.parquet_files = parquet_files
         self.columns = columns
+        self.context_window = context_window
         self.batch_size = batch_size
         self.tokenizer = tokenizer
         self.transform = transform
-        self.padder = padder(self.tokenizer.pad_token_id, self.max_seq_len)
+        self.padder = padder(self.tokenizer.pad_token_id, self.max_seq_len) if padder is not None else None
 
         self.file_index: int = 0
         self.data_index: int = 0
@@ -53,6 +55,16 @@ class PolarsParquetBatchIterator:
     def load_next_file(self):
         self.current_data = (pl.scan_parquet(self.parquet_files[self.file_index])
                       .select(['read1_seq', 'read2_seq'])
+                      .with_columns([
+                          pl.col('read1_seq').str.slice(
+                              (pl.col('read1_seq').str.len_chars() / 2 - self.context_window).cast(int),
+                              2 * self.context_window
+                            ),
+                            pl.col('read2_seq').str.slice(
+                                (pl.col('read2_seq').str.len_chars() / 2 - self.context_window).cast(int),
+                                2 * self.context_window
+                            )
+                      ])
                       ).collect().map_rows(lambda x: '[CLS]' + x[0].replace('', ' ') + '[SEP]' + x[1].replace('', ' ') + '[SEP]').sample(fraction=1)
         
         if self.transform:
@@ -73,10 +85,12 @@ class PolarsParquetBatchIterator:
 class PolarsBatchedParquetDataset(IterableDataset):
     def __init__(self, 
                  parquet_files: Union[List[str], List[Path]],
-                 columns: List[str], 
+                 columns: List[str],
+                 context_window: int,
                  batch_size: int,
                  tokenizer: Tokenizer,
-                 transform: Optional[Any] = None
+                 transform: Optional[Any] = None,
+                    padder: Optional[Any] = None
                  ):
         super().__init__()
         parquet_files = parquet_files if isinstance(parquet_files, list) else [parquet_files]
@@ -84,18 +98,28 @@ class PolarsBatchedParquetDataset(IterableDataset):
         self.parquet_files = parquet_files
 
         self.columns = columns
+        self.context_window = context_window
         self.batch_size = batch_size
         self.tokenizer = tokenizer
         self.transform = transform
+        self.padder = padder
 
     def __iter__(self):
         worker_info = get_worker_info()
         if worker_info is None:
-            return PolarsParquetBatchIterator(self.parquet_files, self.columns, self.batch_size, self.tokenizer, self.transform)
+            return PolarsParquetBatchIterator(self.parquet_files, 
+                                              self.columns, 
+                                              self.context_window,
+                                              self.batch_size, 
+                                              self.tokenizer, 
+                                              self.transform,
+                                              self.padder)
         else:
             return PolarsParquetBatchIterator(
                 [elem for ind, elem in enumerate(self.parquet_files) if (ind % worker_info.num_workers) == worker_info.id], 
                 self.columns, 
+                self.context_window,
                 self.batch_size,
                 self.tokenizer,
-                self.transform)
+                self.transform,
+                self.padder)

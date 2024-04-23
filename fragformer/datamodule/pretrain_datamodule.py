@@ -17,6 +17,7 @@ class PretrainDataModule(LightningDataModule):
         self,
         parquet_path: Union[str, Path],
         columns: List[str],
+        context_window: int,
         tokenizer: Tokenizer,
         transform: Optional[Any] = None,
         padder: Optional[Any] = None,
@@ -31,18 +32,20 @@ class PretrainDataModule(LightningDataModule):
         self.save_hyperparameters()
 
         self.parquet_files = self.parse_paths(parquet_path)
+        self.columns = columns
+        self.context_window = context_window
         self.transform = transform
         self.tokenizer = tokenizer
         self.padder = padder
-        self.columns = columns
-        
 
     def setup(self, stage: Optional[str] = None) -> None:
         self.train_dataset = PolarsBatchedParquetDataset(
             parquet_files=self.parquet_files,
             columns=self.columns,
+            context_window=self.context_window,
             batch_size=self.hparams.batch_size,
             tokenizer=self.tokenizer,
+            padder=self.padder,
             transform=self.transform)
 
     def train_dataloader(self) -> DataLoader:

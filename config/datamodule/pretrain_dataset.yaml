@@ -3,11 +3,12 @@ parquet_path: ${oc.env:PARQUET_PATH}
 columns: 
   - "read1_seq"
   - "read2_seq"
+context_window: 25
 tokenizer:
   _target_: fragformer.datamodule.components.tokenizers.BasicTokenizer
   vocabulary: "ACGT"
   add_special_tokens: True
 transform: null
-padder:
-  _target_: fragformer.transforms.transforms.PadSequence
-  _partial_: True
+# padder:
+#   _target_: fragformer.transforms.transforms.PadSequence
+#   _partial_: True
