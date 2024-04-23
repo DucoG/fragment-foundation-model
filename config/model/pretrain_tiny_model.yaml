@@ -1,0 +1,12 @@
+_target_: fragformer.models.fragment_xtransformer.FragmentXTransformer
+num_tokens: 9 # vocab_size
+max_seq_len: 43
+# use_abs_pos_emb: True
+attn_layers:
+  _target_: x_transformers.x_transformers.Encoder
+  dim: 128
+  depth: 2
+  heads: 2
+  ff_glu: True
+  attn_dropout: 0.1
+  ff_dropout: 0.1

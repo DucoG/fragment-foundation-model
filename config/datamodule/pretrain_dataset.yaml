@@ -1,0 +1,13 @@
+_target_: fragformer.datamodule.pretrain_datamodule.PretrainDataModule
+parquet_path: ${oc.env:parquet_path}
+columns: 
+  - "read1_seq"
+  - "read2_seq"
+tokenizer:
+  _target_: fragformer.datamodule.components.tokenizers.BasicTokenizer
+  vocabulary: "ACGT"
+  add_special_tokens: True
+transform: null
+padder:
+  _target_: fragformer.transforms.transforms.PadSequence
+  _partial_: True

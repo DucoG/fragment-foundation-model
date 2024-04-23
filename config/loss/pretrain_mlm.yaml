@@ -1,0 +1,6 @@
+_target_: fragformer.loss.LossFactory
+losses:
+  - mlm_loss:
+      _target_: fragformer.loss.MLMLoss
+      weight: 1.
+      pad_token_id: 0
