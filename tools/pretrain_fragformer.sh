@@ -19,8 +19,8 @@ TIME=$(date +%H-%M-%S)
 echo 'Start script:'
 echo 'current time' $(date)
 
-mlflow server --backend-store-uri ../logs/mlflow/mlruns --host 0.0.0.0:$MLFLOW_PORT &
-HYDRA_FULL_ERROR=1 python pretrain.py task_name=$EXPERIMENT_NAME
+HYDRA_FULL_ERROR=1 
+srun python pretrain.py task_name=$EXPERIMENT_NAME
 
 echo 'current time' $(date)
 echo 'Finished'
