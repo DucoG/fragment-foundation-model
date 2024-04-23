@@ -19,7 +19,7 @@ def main(config: DictConfig):
 
     # Imports can be nested inside @hydra.main to optimize tab completion
     # https://github.com/facebookresearch/hydra/issues/934
-    from fragformer.entrypoints import stapler_entrypoint
+    from fragformer.entrypoints import fragformer_entrypoint
     from fragformer.utils.io_utils import extras, print_config, validate_config
 
     # Validate config -- Fails if there are mandatory missing values
@@ -32,7 +32,7 @@ def main(config: DictConfig):
         print_config(config, resolve=True)
 
     # Train model
-    return stapler_entrypoint(config)
+    return fragformer_entrypoint(config)
 
 
 if __name__ == "__main__":

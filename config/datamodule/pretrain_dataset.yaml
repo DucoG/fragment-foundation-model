@@ -1,5 +1,5 @@
 _target_: fragformer.datamodule.pretrain_datamodule.PretrainDataModule
-parquet_path: ${oc.env:parquet_path}
+parquet_path: ${oc.env:PARQUET_PATH}
 columns: 
   - "read1_seq"
   - "read2_seq"
