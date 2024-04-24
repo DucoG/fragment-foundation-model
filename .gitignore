@@ -120,3 +120,7 @@ dlup/preprocessors/tests/data/test_output
 tools/logs
 config/machine_settings/*
 !config/machine_settings/example.yaml
+
+# checkpoints
+*.ckpt
+tools/checkpoints/*
