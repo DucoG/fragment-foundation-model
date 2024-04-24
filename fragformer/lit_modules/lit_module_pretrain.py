@@ -22,6 +22,7 @@ class FragFormerLitModule(L.LightningModule):
         transforms: dict[str, Transform],
         loss: nn.Module,
         scheduler: torch.optim.lr_scheduler._LRScheduler,
+        scheduler_interval: str = "epoch",
     ):
         super().__init__()
 
@@ -33,6 +34,7 @@ class FragFormerLitModule(L.LightningModule):
 
         self.optimizer = optimizer
         self.scheduler = scheduler
+        self.scheduler_interval = scheduler_interval
 
         # accuracy metric (pretraining and fine-tuning)
         self.train_mlm_acc = Accuracy(task="multiclass", num_classes=9)
@@ -91,6 +93,6 @@ class FragFormerLitModule(L.LightningModule):
         optim = self.optimizer(params=self.parameters())
         if self.scheduler is not None:
             scheduler = self.scheduler(optimizer=optim)
-            return [optim], [scheduler]
+            return [optim], [{'scheduler': scheduler, 'interval': self.scheduler_interval}]
         else:
             return optim

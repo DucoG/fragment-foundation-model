@@ -1,0 +1,88 @@
+Start script:
+current time Wed 24 Apr 2024 04:54:44 PM CEST
+CONFIG
+├── trainer
+│   └── _target_: lightning.pytorch.Trainer                                     
+│       accelerator: gpu                                                        
+│       devices: 1                                                              
+│       max_epochs: 500                                                         
+│       log_every_n_steps: 1                                                    
+│                                                                               
+├── model
+│   └── _target_: fragformer.models.fragment_xtransformer.FragmentXTransformer  
+│       num_tokens: 9                                                           
+│       attn_layers:                                                            
+│         _target_: x_transformers.x_transformers.Encoder                       
+│         dim: 128                                                              
+│         depth: 2                                                              
+│         heads: 2                                                              
+│         ff_glu: true                                                          
+│         attn_dropout: 0.1                                                     
+│         ff_dropout: 0.1                                                       
+│                                                                               
+├── experiment
+│   └── None                                                                    
+├── datamodule
+│   └── _target_: fragformer.datamodule.pretrain_datamodule.PretrainDataModule  
+│       parquet_path: /processing/d.gaillard/top1_mal_full_fragments/PGDX25828P_
+│       columns:                                                                
+│       - read1_seq                                                             
+│       - read2_seq                                                             
+│       context_window: 25                                                      
+│       tokenizer:                                                              
+│         _target_: fragformer.datamodule.components.tokenizers.BasicTokenizer  
+│         vocabulary: ACGT                                                      
+│         add_special_tokens: true                                              
+│       transform: null                                                         
+│       batch_size: 2048                                                        
+│       num_workers: 0                                                          
+│       pin_memory: true                                                        
+│                                                                               
+├── callbacks
+│   └── model_checkpoint:                                                       
+│         _target_: lightning.pytorch.callbacks.ModelCheckpoint                 
+│         dirpath: /home/d.gaillard/projects/fragment_autoencoder/fragment_found
+│         filename: pretrain_checkpoint_{epoch:02d}-{train_loss_epoch:.3f}      
+│         monitor: train_loss                                                   
+│         verbose: false                                                        
+│         save_last: true                                                       
+│         save_top_k: 5                                                         
+│         mode: min                                                             
+│         auto_insert_metric_name: true                                         
+│         save_weights_only: false                                              
+│         every_n_train_steps: null                                             
+│         train_time_interval: null                                             
+│         every_n_epochs: 1                                                     
+│         save_on_train_epoch_end: true                                         
+│       lr_monitor:                                                             
+│         _target_: lightning.pytorch.callbacks.LearningRateMonitor             
+│       rich_progress_bar:                                                      
+│         _target_: lightning.pytorch.callbacks.RichProgressBar                 
+│       model_summary:                                                          
+│         _target_: lightning.pytorch.callbacks.RichModelSummary                
+│         max_depth: 1                                                          
+│                                                                               
+├── logger
+│   └── wandb:                                                                  
+│         _target_: lightning.pytorch.loggers.wandb.WandbLogger                 
+│         save_dir: /home/d.gaillard/projects/fragment_autoencoder/fragment_foun
+│         offline: false                                                        
+│         id: null                                                              
+│         anonymous: null                                                       
+│         project: lightning-hydra-template                                     
+│         log_model: true                                                       
+│         prefix: ''                                                            
+│         group: ''                                                             
+│         tags: []                                                              
+│         job_type: ''                                                          
+│                                                                               
+├── test_after_training
+│   └── False                                                                   
+├── seed
+│   └── 42                                                                      
+└── name
+    └── None                                                                    
+[2024-04-24 16:54:56,615][lightning_fabric.utilities.seed][INFO] - [rank: 0] Seed set to 42
+[2024-04-24 16:54:56,622][fragformer.entrypoints][INFO] - Instantiating datamodule <fragformer.datamodule.pretrain_datamodule.PretrainDataModule>
+current time Wed 24 Apr 2024 04:54:59 PM CEST
+Finished

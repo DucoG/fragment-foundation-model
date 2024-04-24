@@ -11,5 +11,7 @@ optimizer:
 scheduler:
   _target_: fragformer.utils.model_utils.CosineWarmupScheduler
   _partial_: True
-  warmup: 10
-  max_iters: 500
+  warmup: 180000
+  max_iters: 9000000
+
+scheduler_interval: step

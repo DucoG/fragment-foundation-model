@@ -1,0 +1,114 @@
+/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/lightning/pytorch/utilities/parsing.py:199: Attribute 'loss' is an instance of `nn.Module` and is already saved during checkpointing. It is recommended to ignore them using `self.save_hyperparameters(ignore=['loss'])`.
+INFO: Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+INFO: GPU available: True (cuda), used: True
+INFO: TPU available: False, using: 0 TPU cores
+INFO: IPU available: False, using: 0 IPUs
+INFO: HPU available: False, using: 0 HPUs
+wandb: Currently logged in as: ducogaillard. Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.16.6
+wandb: Run data is saved locally in /home/d.gaillard/projects/fragment_autoencoder/fragment_foundation_model/logs/pretrain_fragformer/runs/2024-04-24_15-35-59/wandb/run-20240424_153607-zf41gr1i
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run different-terrain-12
+wandb: ⭐️ View project at https://wandb.ai/ducogaillard/lightning-hydra-template
+wandb: 🚀 View run at https://wandb.ai/ducogaillard/lightning-hydra-template/runs/zf41gr1i
+INFO: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+INFO: SLURM auto-requeueing enabled. Setting signal handlers.
+Error executing job with overrides: ['task_name=pretrain_fragformer']
+Traceback (most recent call last):
+  File "/home/d.gaillard/projects/fragment_autoencoder/fragment_foundation_model/tools/pretrain.py", line 36, in main
+    return fragformer_entrypoint(config)
+  File "/home/d.gaillard/projects/fragment_autoencoder/fragment_foundation_model/fragformer/entrypoints.py", line 119, in fragformer_entrypoint
+    trainer.fit(model=model, datamodule=datamodule)
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 543, in fit
+    call._call_and_handle_interrupt(
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 44, in _call_and_handle_interrupt
+    return trainer_fn(*args, **kwargs)
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 579, in _fit_impl
+    self._run(model, ckpt_path=ckpt_path)
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 986, in _run
+    results = self._run_stage()
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 1032, in _run_stage
+    self.fit_loop.run()
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/lightning/pytorch/loops/fit_loop.py", line 205, in run
+    self.advance()
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/lightning/pytorch/loops/fit_loop.py", line 363, in advance
+    self.epoch_loop.run(self._data_fetcher)
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/lightning/pytorch/loops/training_epoch_loop.py", line 138, in run
+    self.advance(data_fetcher)
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/lightning/pytorch/loops/training_epoch_loop.py", line 242, in advance
+    batch_output = self.automatic_optimization.run(trainer.optimizers[0], batch_idx, kwargs)
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/lightning/pytorch/loops/optimization/automatic.py", line 191, in run
+    self._optimizer_step(batch_idx, closure)
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/lightning/pytorch/loops/optimization/automatic.py", line 269, in _optimizer_step
+    call._call_lightning_module_hook(
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 157, in _call_lightning_module_hook
+    output = fn(*args, **kwargs)
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/lightning/pytorch/core/module.py", line 1303, in optimizer_step
+    optimizer.step(closure=optimizer_closure)
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/lightning/pytorch/core/optimizer.py", line 152, in step
+    step_output = self._strategy.optimizer_step(self._optimizer, closure, **kwargs)
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/lightning/pytorch/strategies/strategy.py", line 239, in optimizer_step
+    return self.precision_plugin.optimizer_step(optimizer, model=model, closure=closure, **kwargs)
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/lightning/pytorch/plugins/precision/precision.py", line 122, in optimizer_step
+    return optimizer.step(closure=closure, **kwargs)
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/torch/optim/lr_scheduler.py", line 69, in wrapper
+    return wrapped(*args, **kwargs)
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/torch/optim/optimizer.py", line 280, in wrapper
+    out = func(*args, **kwargs)
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/torch/optim/optimizer.py", line 33, in _use_grad
+    ret = func(self, *args, **kwargs)
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/torch/optim/adamw.py", line 148, in step
+    loss = closure()
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/lightning/pytorch/plugins/precision/precision.py", line 108, in _wrap_closure
+    closure_result = closure()
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/lightning/pytorch/loops/optimization/automatic.py", line 144, in __call__
+    self._result = self.closure(*args, **kwargs)
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/lightning/pytorch/loops/optimization/automatic.py", line 129, in closure
+    step_output = self._step_fn()
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/lightning/pytorch/loops/optimization/automatic.py", line 319, in _training_step
+    training_step_output = call._call_strategy_hook(trainer, "training_step", *kwargs.values())
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 309, in _call_strategy_hook
+    output = fn(*args, **kwargs)
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/lightning/pytorch/strategies/strategy.py", line 391, in training_step
+    return self.lightning_module.training_step(*args, **kwargs)
+  File "/home/d.gaillard/projects/fragment_autoencoder/fragment_foundation_model/fragformer/lit_modules/lit_module_pretrain.py", line 54, in training_step
+    output_dict = self.forward(batch, stage="fit")
+  File "/home/d.gaillard/projects/fragment_autoencoder/fragment_foundation_model/fragformer/lit_modules/lit_module_pretrain.py", line 46, in forward
+    preds = self.model(batch["input"], **kwargs)
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/d.gaillard/projects/fragment_autoencoder/fragment_foundation_model/fragformer/models/fragment_xtransformer.py", line 42, in forward
+    x = super().forward(x, **kwargs)
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/x_transformers/x_transformers.py", line 1698, in forward
+    x, intermediates = self.attn_layers(x, mask = mask, mems = mems, mem_masks = mem_masks, cache = cache, return_hiddens = True, seq_start_pos = seq_start_pos, **kwargs)
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/x_transformers/x_transformers.py", line 1333, in forward
+    out, inter = block(x, mask = mask, context_mask = self_attn_kv_mask, attn_mask = attn_mask, rel_pos = self.rel_pos, rotary_pos_emb = rotary_pos_emb, prev_attn = prev_attn, cache = next(iter_attn_cache, None), mem = layer_mem, mem_mask = layer_mem_mask, return_intermediates = True)
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/x_transformers/x_transformers.py", line 943, in forward
+    out, intermediates = self.attend(
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/d.gaillard/source/miniconda3/envs/pytorch/lib/python3.10/site-packages/x_transformers/attend.py", line 311, in forward
+    post_softmax_attn = attn.clone()
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 332.00 MiB (GPU 0; 10.75 GiB total capacity; 10.27 GiB already allocated; 160.50 MiB free; 10.41 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+wandb: - 0.009 MB of 0.009 MB uploadedwandb: \ 0.009 MB of 0.009 MB uploadedwandb: | 0.009 MB of 0.041 MB uploadedwandb: 
+wandb: Run history:
+wandb:            lr-AdamW ▁
+wandb: trainer/global_step ▁
+wandb: 
+wandb: Run summary:
+wandb:            lr-AdamW 0.0
+wandb: trainer/global_step 0
+wandb: 
+wandb: 🚀 View run different-terrain-12 at: https://wandb.ai/ducogaillard/lightning-hydra-template/runs/zf41gr1i
+wandb: ⭐️ View project at: https://wandb.ai/ducogaillard/lightning-hydra-template
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: /home/d.gaillard/projects/fragment_autoencoder/fragment_foundation_model/logs/pretrain_fragformer/runs/2024-04-24_15-35-59/wandb/run-20240424_153607-zf41gr1i/logs
+srun: error: boveri: task 0: Exited with exit code 1

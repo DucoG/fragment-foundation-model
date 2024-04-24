@@ -1,0 +1,7 @@
+Error executing job with overrides: ['task_name=pretrain_fragformer']
+Error in call to target 'fragformer.datamodule.pretrain_datamodule.PretrainDataModule':
+FileNotFoundError('Path /processing/d.gaillard/top1_mal_full_fragments/PGDX25828P_WGS_hg19_mrk_25length_fragment_end_motifs_shuffled.parquet does not exist.')
+full_key: datamodule
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+srun: error: flemming: task 0: Exited with exit code 1

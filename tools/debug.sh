@@ -6,11 +6,8 @@
 #SBATCH --partition=oncode
 #SBATCH --gpus=1
 #SBATCH --ntasks-per-node=1
-#SBATCH --output=sbatch_out/debug/debug_fragformer_%A.out
-#SBATCH --error=sbatch_out/debug/debug_fragformer_%A.err
-
-# make sure that we are in the correct directory
-cd /home/d.gaillard/projects/fragment_autoencoder/fragment_foundation_model
+#SBATCH --output=../sbatch_out/debug/debug_fragformer_%A.out
+#SBATCH --error=../sbatch_out/debug/debug_fragformer_%A.err
 
 
 EXPERIMENT_NAME="debug_fragformer"
