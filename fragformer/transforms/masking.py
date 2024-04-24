@@ -59,7 +59,7 @@ class Masking(Transform):
         mask_indices = torch.nonzero(mask, as_tuple=True)
 
         input_dict["input"] = masked_input
-        input_dict["mlm_labels"] = labels
+        input_dict["mlm_labels"] = labels.long()
         input_dict["mlm_mask_indices"] = mask_indices
 
         return input_dict

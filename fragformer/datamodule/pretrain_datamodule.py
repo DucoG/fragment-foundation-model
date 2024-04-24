@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import Any, Dict, Optional, Union, List
 
 from omegaconf import DictConfig
-from pytorch_lightning import LightningDataModule
+from lightning.pytorch import LightningDataModule
 from torch.utils.data import DataLoader
 
 from fragformer.datamodule.components.pretrain_dataset import PolarsBatchedParquetDataset

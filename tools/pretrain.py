@@ -15,7 +15,8 @@ dotenv.load_dotenv(override=True)
 def main(config: DictConfig):
     # needed to import fragformer
     import sys
-    sys.path.append('../')
+    # sys.path.append('../')
+    sys.path.append('/home/d.gaillard/projects/fragment_autoencoder/fragment_foundation_model')
 
     # Imports can be nested inside @hydra.main to optimize tab completion
     # https://github.com/facebookresearch/hydra/issues/934

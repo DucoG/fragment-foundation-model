@@ -37,11 +37,7 @@ class PolarsParquetBatchIterator:
         while True:
             if self.data_index == 0:  # Load new file
                 if self.file_index >= len(self.parquet_files):
-                    if self.leftover is not None:
-                        result = self.leftover
-                        self.leftover = None
-                        return result
-                    raise StopIteration
+                    raise StopIteration # irrespective of whether there is leftover data or not
                 self.load_next_file()
 
             if self.data_index + self.batch_size <= self.current_data.shape[0]:
@@ -53,7 +49,7 @@ class PolarsParquetBatchIterator:
             self.data_index = 0
     
     def load_next_file(self):
-        self.current_data = (pl.scan_parquet(self.parquet_files[self.file_index])
+        self.current_data: pl.DataFrame = (pl.scan_parquet(self.parquet_files[self.file_index])
                       .select(['read1_seq', 'read2_seq'])
                       .with_columns([
                           pl.col('read1_seq').str.slice(
@@ -79,7 +75,7 @@ class PolarsParquetBatchIterator:
         batch = self.current_data[self.data_index:self.data_index + self.batch_size]
         batch = batch.map_rows(lambda x: (self.tokenizer.encode(x[0]),)).to_numpy()
         batch = torch.from_numpy(np.stack(batch[:, 0], dtype=np.float32))
-        return batch
+        return {"input": batch}
         
 
 class PolarsBatchedParquetDataset(IterableDataset):

@@ -6,12 +6,13 @@
 #SBATCH --partition=oncode
 #SBATCH --gpus=1
 #SBATCH --ntasks-per-node=1
-#SBATCH --output=pretrain_fragformer_%A.out
-#SBATCH --error=pretrain_fragformer_%A.err
+#SBATCH --output=sbatch_out/pretrain_fragformer/pretrain_fragformer_%A.out
+#SBATCH --error=sbatch_out/pretrain_fragformer/pretrain_fragformer_%A.err
 
-# activate conda env
-conda activate pytorch
+# make sure that we are in the correct directory
+cd /home/d.gaillard/projects/fragment_autoencoder/fragment_foundation_model
 
+HYDRA_FULL_ERROR=1
 EXPERIMENT_NAME="pretrain_fragformer"
 DATE=$(date +%Y-%m-%d)
 TIME=$(date +%H-%M-%S)

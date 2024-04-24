@@ -7,6 +7,7 @@ import hydra
 from omegaconf import DictConfig
 from pytorch_lightning import Callback, LightningDataModule, LightningModule, Trainer, seed_everything
 from torch.utils.data import DataLoader, Dataset
+from torch.multiprocessing import set_start_method
 
 from fragformer.utils.io_utils import get_pylogger, log_hyperparameters, save_output
 
@@ -26,6 +27,9 @@ def fragformer_entrypoint(config: DictConfig, fold: Optional[int] = None) -> Opt
     # Set seed for random number generators in pytorch, numpy and python.random
     if config.get("seed"):
         seed_everything(config.seed, workers=True)
+
+    # Set start method for multiprocessing
+    set_start_method("spawn")
 
     # Init lightning datamodule
     if config.datamodule.get("_target_"):
