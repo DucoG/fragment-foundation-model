@@ -127,3 +127,7 @@ config/machine_settings/*
 # everything in the logs folder recursively
 */[Ll]ogs/*
 logs/*
+
+# sbatch out
+*.out
+*.err

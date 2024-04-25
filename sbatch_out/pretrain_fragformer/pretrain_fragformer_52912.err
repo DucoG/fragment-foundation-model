@@ -1,2 +1,0 @@
-/home/d.gaillard/source/miniconda3/envs/pytorch/bin/python: can't open file '/home/d.gaillard/projects/fragment_autoencoder/fragment_foundation_model/pretrain.py': [Errno 2] No such file or directory
-srun: error: boveri: task 0: Exited with exit code 2

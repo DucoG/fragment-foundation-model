@@ -2,7 +2,7 @@ _target_: fragformer.lit_modules.lit_module_pretrain.FragFormerLitModule
 
 optimizer:
   _target_: torch.optim.AdamW
-  lr: 0.01
+  lr: 0.005
   eps: 1e-6
   betas: [0.9, 0.999]
   weight_decay: 0.01
@@ -14,4 +14,4 @@ scheduler:
   warmup: 180000
   max_iters: 9000000
 
-scheduler_interval: epoch
+scheduler_interval: step
