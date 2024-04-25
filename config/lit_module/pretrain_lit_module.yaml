@@ -14,4 +14,4 @@ scheduler:
   warmup: 180000
   max_iters: 9000000
 
-scheduler_interval: step
+scheduler_interval: epoch
