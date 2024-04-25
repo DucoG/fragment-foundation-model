@@ -122,5 +122,8 @@ config/machine_settings/*
 !config/machine_settings/example.yaml
 
 # checkpoints
-*.ckpt
-tools/checkpoints/*
+**/*.ckpt
+
+# everything in the logs folder recursively
+*/[Ll]ogs/*
+logs/*
