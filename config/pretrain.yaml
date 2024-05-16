@@ -9,7 +9,7 @@ defaults:
       - lr_monitor.yaml
       - rich_progress_bar.yaml
       - model_summary.yaml
-  - model: pretrain_tiny_model.yaml
+  - model: pretrain_small_model.yaml
   - transforms: mlm.yaml
   - lit_module: pretrain_lit_module.yaml
   - loss: pretrain_mlm.yaml

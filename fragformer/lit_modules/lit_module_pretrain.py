@@ -73,6 +73,28 @@ class FragFormerLitModule(L.LightningModule):
         self.log("train_loss", loss, on_step=True, on_epoch=True, prog_bar=False, logger=True, batch_size=batch_size)
 
         return loss
+    
+    def validation_step(self, batch, batch_idx):
+        output_dict = self.forward(batch, stage="validate")
+        loss = output_dict["loss"]
+        preds = output_dict["preds"]
+        batch_size = batch["input"].shape[0]
+
+        # log
+        labels_mlm, preds_mlm = self.extract_mlm_labels_and_preds(batch, preds)
+        self.val_mlm_acc(labels_mlm, preds_mlm)
+        self.log(
+            "val_mlm_acc",
+            self.val_mlm_acc,
+            on_step=False,
+            on_epoch=True,
+            prog_bar=False,
+            logger=True,
+            batch_size=batch_size,
+        )
+        self.log("val_loss", loss, on_step=True, on_epoch=True, prog_bar=False, logger=True, batch_size=batch_size)
+
+        return loss
 
 
     def extract_mlm_labels_and_preds(self, batch, preds):
