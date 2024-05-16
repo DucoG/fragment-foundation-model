@@ -1,5 +1,6 @@
 import random
 from typing import Any, Optional, Tuple, Union, Dict, List
+import logging
 import numpy as np
 import torch
 from torch.utils.data import IterableDataset, get_worker_info
@@ -111,6 +112,9 @@ class PolarsBatchedParquetDataset(IterableDataset):
                                               self.transform,
                                               self.padder)
         else:
+            if len(self.parquet_files) < worker_info.num_workers:
+                logging.warning(f"Number of workers ({worker_info.num_workers}) is greater than the number of files ({len(self.parquet_files)}). Some workers will receive an empty iterator.")
+            
             return PolarsParquetBatchIterator(
                 [elem for ind, elem in enumerate(self.parquet_files) if (ind % worker_info.num_workers) == worker_info.id], 
                 self.columns, 

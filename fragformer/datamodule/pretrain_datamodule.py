@@ -3,8 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any, Dict, Optional, Union, List, Tuple
 import logging
-
-import numpy as np
+import random
 
 from omegaconf import DictConfig
 from lightning.pytorch import LightningDataModule
@@ -102,7 +101,7 @@ class PretrainDataModule(LightningDataModule):
             return parquet_files, []
         
         # shuffle the files
-        np.random.shuffle(parquet_files)
+        random.shuffle(parquet_files)
 
         split_idx = max(len(parquet_files) * val_split, 1)
         return parquet_files[split_idx:], parquet_files[:split_idx]
