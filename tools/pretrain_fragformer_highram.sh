@@ -22,7 +22,7 @@ echo 'Start script:'
 echo 'current time' $(date)
 
 HYDRA_FULL_ERROR=1
-srun python pretrain.py task_name=$EXPERIMENT_NAME
+srun python pretrain.py task_name=$EXPERIMENT_NAME machine_settings=pretrain_quadro_rtx8000.yaml
 
 echo 'current time' $(date)
 echo 'Finished'

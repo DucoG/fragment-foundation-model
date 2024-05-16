@@ -21,7 +21,7 @@ class PretrainDataModule(LightningDataModule):
         columns: List[str],
         context_window: int,
         tokenizer: Tokenizer,
-        val_split: float = 0,
+        val_split: float = 0.0,
         transform: Optional[Any] = None,
         padder: Optional[Any] = None,
         batch_size: int = 128,
@@ -35,7 +35,7 @@ class PretrainDataModule(LightningDataModule):
         self.save_hyperparameters()
 
         self.parquet_files = self.parse_paths(parquet_path)
-        self.train_parquet_files, self.val_parquet_files = self.split_data(self.parquet_files, val_split)
+        self.train_parquet_files, self.val_parquet_files = self.split_parquet_files(self.parquet_files, val_split)
         self.columns = columns
         self.context_window = context_window
         self.transform = transform

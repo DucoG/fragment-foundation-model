@@ -9,6 +9,7 @@ tokenizer:
   vocabulary: "ACGT"
   add_special_tokens: True
 transform: null
+val_split: 0.001
 # padder:
 #   _target_: fragformer.transforms.transforms.PadSequence
 #   _partial_: True

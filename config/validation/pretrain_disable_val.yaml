@@ -1,0 +1,7 @@
+# validation/disable.yaml
+# Overrides to disable validation
+trainer:
+  limit_val_batches: 0  # Disables validation in the Trainer
+
+datamodule:
+  val_split: 0 # disables validation data loading

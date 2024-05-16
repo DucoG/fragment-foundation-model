@@ -18,6 +18,8 @@ defaults:
   - hydra: default.yaml  # if we want to setup different hydra logging dirs / color log
   - paths: default.yaml
   - machine_settings: pretrain_rtx2080.yaml
+  - validation: pretrain_enable_val.yaml
+
 
   # experiment configs allow for version control of specific configurations
   # e.g. specific hyperparameter searches or something
