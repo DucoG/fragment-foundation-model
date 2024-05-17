@@ -108,6 +108,12 @@ def fragformer_entrypoint(config: DictConfig, fold: Optional[int] = None) -> Opt
         )
     else:
         raise NotImplementedError(f"No trainer target found in <{config.trainer}>")
+    
+    for logger in lightning_loggers:
+        if isinstance(logger, hydra.utils.get_class(config.logger.wandb._target_)):
+            watch_config = config.logger.wandb.get("watch", {})
+            if watch_config.get("enabled", False):
+                logger.watch(model, **watch_config)
 
     # Send some parameters from config to all lightning loggers
     logger.info("Logging hyperparameters...")

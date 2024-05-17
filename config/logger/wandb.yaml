@@ -14,3 +14,8 @@ wandb:
   group: ""
   tags: []
   job_type: ""
+
+watch:
+  enabled: true            # Enable or disable watch functionality
+  log: "all"
+  log_freq: 100
