@@ -1,6 +1,8 @@
 from typing import Any
 
 import lightning as L
+from lightning.pytorch.utilities import grad_norm
+
 import torch
 from torch import nn
 from torch.optim import Optimizer
@@ -118,3 +120,9 @@ class FragFormerLitModule(L.LightningModule):
             return [optim], [{'scheduler': scheduler, 'interval': self.scheduler_interval}]
         else:
             return optim
+        
+    def on_before_optimizer_step(self, optimizer):
+        # track grad norm
+        grads = grad_norm(self.model, norm_type=2)
+        self.log_dict(grads, on_step=True, on_epoch=False, prog_bar=True, logger=True)
+        return super().on_before_optimizer_step(optimizer)
