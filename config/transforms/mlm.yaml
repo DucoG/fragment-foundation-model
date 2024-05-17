@@ -6,6 +6,6 @@
 defaults:
   - _self_
   - /transforms/stages@fit: train_mlm
-  - /transforms/stages@validate: null
+  - /transforms/stages@validate: train_mlm
   - /transforms/stages@test: null
   - /transforms/stages@predict: null
